@@ -14,7 +14,7 @@ vim.lsp.config.lua_ls = {
   },
 }
 
-local servers = { "html", "cssls", "vtsls", "lua_ls" }
+local servers = { "html", "cssls", "vtsls", "lua_ls", "tailwindcss" }
 vim.lsp.enable(servers)
 
 -- read :h vim.lsp.config for changing options of lsp servers

@@ -19,9 +19,11 @@ return {
       auto_install = true,
       ensure_installed = {
         "vim", "lua", "vimdoc",
-        "html", "css"
+        "html", "css",
+        "javascript", "typescript", "tsx", "jsx"
       },
       highlight = { enable = true },
+      compilers = { "clang" }
     },
   },
   {
@@ -67,5 +69,27 @@ return {
       --   If not available, we use `mini` as the fallback
       "rcarriga/nvim-notify",
     }
-  }
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    ft = { "html", "javascript", "typescript", "javascriptreact", "typescriptreact", "tsx", "jsx", "xml", "svelte", "vue" },
+    config = function()
+      require('nvim-ts-autotag').setup({
+        opts = {
+          -- Defaults
+          enable_close = true,         -- Auto close tags
+          enable_rename = true,        -- Auto rename pairs of tags
+          enable_close_on_slash = true -- Auto close on trailing </
+        },
+      })
+    end
+
+  },
+  {
+  "andymass/vim-matchup",
+  event = "BufReadPost",
+  config = function()
+    vim.g.matchup_matchparen_offscreen = { method = "popup" }
+  end,
+},
 }

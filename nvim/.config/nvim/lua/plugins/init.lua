@@ -86,10 +86,40 @@ return {
 
   },
   {
-  "andymass/vim-matchup",
-  event = "BufReadPost",
-  config = function()
-    vim.g.matchup_matchparen_offscreen = { method = "popup" }
-  end,
-},
+    "andymass/vim-matchup",
+    event = "BufReadPost",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end,
+  },
+  {
+    'Bekaboo/dropbar.nvim',
+    event = "VimEnter", -- Load early to compete with NvChad UI
+    dependencies = {
+      'nvim-telescope/telescope-fzf-native.nvim',
+      build = 'make'
+    },
+    config = function()
+      local dropbar = require('dropbar')
+      dropbar.setup({
+        bar = {
+          -- This ensures dropbar shows up even if other plugins try to claim the winbar
+          attach_events = { 'BufWinEnter', 'BufWritePost', 'LspAttach' },
+        }
+      })
+
+      -- Keymaps
+      local dropbar_api = require('dropbar.api')
+      vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
+    end
+  },
+  {
+    "Exafunction/windsurf.nvim",
+    event = "BufEnter",
+    config = function()
+      require("codeium").setup({
+        enable_cmp_source = true,
+      })
+    end,
+  },
 }

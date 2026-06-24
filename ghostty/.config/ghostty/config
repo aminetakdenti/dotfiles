@@ -1,4 +1,11 @@
 font-family = "JetBrains Mono"
-theme = Gruvbox Material Dark
+theme = TokyoNight Night
+theme = onyx-dark
 window-padding-x = 10
 window-padding-y = 10
+
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+l=goto_split:right
+keybind = ctrl+shift+j=goto_split:bottom
+keybind = ctrl+shift+k=goto_split:top
+

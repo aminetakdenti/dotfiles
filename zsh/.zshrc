@@ -1,7 +1,5 @@
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -18,6 +16,22 @@ plugins=(
 
 source "$ZSH/oh-my-zsh.sh"
 
+path_prepend() {
+  [[ -d "$1" ]] || return 0
+  case ":$PATH:" in
+    *":$1:"*) ;;
+    *) export PATH="$1:$PATH" ;;
+  esac
+}
+
+path_append() {
+  [[ -d "$1" ]] || return 0
+  case ":$PATH:" in
+    *":$1:"*) ;;
+    *) export PATH="$PATH:$1" ;;
+  esac
+}
+
 alias e='nvim'
 alias vim='nvim'
 alias vi='nvim'
@@ -27,6 +41,7 @@ alias lg='lazygit'
 alias gclonep='git clone git@github-personal:'
 alias gclonew='git clone git@github-work:'
 
+export EDITOR="nvim"
 
 export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
@@ -52,7 +67,7 @@ path_prepend "$PNPM_HOME"
 
 eval "$(zoxide init zsh)"
 
+source "$HOME/dotfiles/zsh/functions/ai-commit.zsh"
+
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-
-source ~/.config/zsh/functions/ai-commit.zsh

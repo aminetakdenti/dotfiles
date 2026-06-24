@@ -9,3 +9,7 @@ keybind = ctrl+shift+l=goto_split:right
 keybind = ctrl+shift+j=goto_split:bottom
 keybind = ctrl+shift+k=goto_split:top
 
+cursor-style = block
+cursor-style-blink = true
+shell-integration-features = no-cursor
+

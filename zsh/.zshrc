@@ -71,3 +71,10 @@ source "$HOME/dotfiles/zsh/functions/ai-commit.zsh"
 
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+# bun completions
+[ -s "/Users/amine-dcb/.bun/_bun" ] && source "/Users/amine-dcb/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

@@ -99,7 +99,7 @@ do
   vim.g.maplocalleader = ' '
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -942,6 +942,17 @@ do
       end
     end,
   })
+end
+
+do
+  vim.pack.add {
+    'https://github.com/nvim-treesitter/nvim-treesitter',
+    'https://github.com/nvim-mini/mini.nvim', -- if you use the mini.nvim suite
+    -- 'https://github.com/nvim-mini/mini.icons',        -- if you use standalone mini plugins
+    -- 'https://github.com/nvim-tree/nvim-web-devicons', -- if you prefer nvim-web-devicons
+    'https://github.com/MeanderingProgrammer/render-markdown.nvim',
+  }
+  require('render-markdown').setup {}
 end
 
 -- ============================================================

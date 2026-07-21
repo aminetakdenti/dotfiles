@@ -1,0 +1,17 @@
+# /Users/amine-dcb/.config/tmuxinator/default.yml
+name: <%= @settings["session_name"] || File.basename(Dir.pwd) %>
+
+root: <%= @settings["root"] || Dir.pwd %>
+
+startup_window: nvim
+
+windows:
+  - terminal:
+
+  - nvim:
+      - nvim
+
+  - ai:
+
+  - git:
+      - lazygit

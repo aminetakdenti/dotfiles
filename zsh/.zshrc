@@ -68,6 +68,7 @@ path_prepend "$PNPM_HOME"
 eval "$(zoxide init zsh)"
 
 source "$HOME/dotfiles/zsh/functions/ai-commit.zsh"
+source "$HOME/dotfiles/zsh/functions/tmx.zsh"
 
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh

@@ -1,7 +1,7 @@
 _git_ai_diff() {
-  local MAX_FILES=25
-  local MAX_FILE_LINES=120
-  local MAX_TOTAL_CHARS=30000
+  local MAX_FILES=20
+  local MAX_HUNKS=2
+  local MAX_TOTAL_CHARS=12000
 
   local EXCLUDES=(
     ':(exclude)package-lock.json'
@@ -13,62 +13,83 @@ _git_ai_diff() {
     ':(exclude)coverage/**'
     ':(exclude)build/**'
     ':(exclude)out/**'
+    ':(exclude)*.min.js'
   )
 
-  local output=""
+  local out=""
   local total=0
 
-  output+="Repository changes\n"
-  output+="==================\n\n"
+  out+="Repository changes\n"
+  out+="==================\n\n"
 
-  output+="Files:\n"
-  output+="$(git diff --cached --name-status "${EXCLUDES[@]}")"
-  output+="\n\n"
+  out+="Files:\n"
+  out+="$(git diff --cached --name-status "${EXCLUDES[@]}")"
+  out+="\n\n"
 
-  output+="Statistics:\n"
-  output+="$(git diff --cached --stat "${EXCLUDES[@]}")"
-  output+="\n\n"
+  out+="Statistics:\n"
+  out+="$(git diff --cached --stat "${EXCLUDES[@]}")"
+  out+="\n"
 
   local files
-  files=("${(@f)$(git diff --cached --name-only "${EXCLUDES[@]}" | head -n "$MAX_FILES")}")
+  files=("${(@f)$(
+    git diff --cached --name-only "${EXCLUDES[@]}" |
+      head -n "$MAX_FILES"
+  )}")
 
   local file
 
   for file in "${files[@]}"; do
     [[ -z "$file" ]] && continue
 
+    out+=$'\n'
+    out+="===== $file ====="
+    out+=$'\n'
+
     local patch
-    patch="$(git diff --cached --unified=2 -- "$file")"
+    patch=$(git diff --cached --unified=1 -- "$file")
 
-    local lines
-    lines=$(printf "%s" "$patch" | wc -l | tr -d ' ')
+    local hunk=0
+    local printing=0
 
-    if (( lines > MAX_FILE_LINES )); then
-      patch="$(
-        {
-          printf "%s\n" "$patch" | head -n 60
-          echo
-          echo "... diff truncated (${lines} lines) ..."
-          echo
-          printf "%s\n" "$patch" | tail -n 60
-        }
-      )"
-    fi
+    while IFS= read -r line; do
+      if [[ "$line" == @@* ]]; then
+        ((hunk++))
 
-    local section
-    section=$'\n'"===== ${file} ====="$'\n'
-    section+="$patch"$'\n'
+        if ((hunk > MAX_HUNKS)); then
+          echo "... additional hunks omitted ..."
+          break
+        fi
 
-    if (( total + ${#section} > MAX_TOTAL_CHARS )); then
-      output+=$'\n'"... remaining files omitted because prompt limit was reached ..."
-      break
-    fi
+        printing=1
+        echo
+        echo "$line"
+        continue
+      fi
 
-    output+="$section"
-    (( total += ${#section} ))
+      ((printing)) || continue
+
+      case "$line" in
+        +*|-*)
+          [[ "$line" == "+++"* || "$line" == "---"* ]] && continue
+          echo "$line"
+          ;;
+      esac
+    done <<<"$patch" >> >(while read -r l; do
+      (( total += ${#l} + 1 ))
+
+      if (( total > MAX_TOTAL_CHARS )); then
+        echo
+        echo "... prompt truncated ..."
+        break
+      fi
+
+      out+="$l"$'\n'
+    done)
+
+    (( total > MAX_TOTAL_CHARS )) && break
   done
 
-  print -r -- "$output"
+  print -r -- "$out"
 }
 
 _aicommit() {

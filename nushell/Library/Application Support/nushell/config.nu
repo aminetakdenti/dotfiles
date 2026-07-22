@@ -17,6 +17,19 @@
 # options using:
 #     config nu --doc | nu-highlight | less -R
 
+# Use vi mode
+$env.config.edit_mode = "vi"
+
+$env.config.keybindings = ($env.config.keybindings | append [
+    {
+        name: escape_to_normal
+        modifier: none
+        keycode: escape
+        mode: [emacs, vi_insert]
+        event: { send: Esc }
+    }
+])
+
 source scripts/tmx.nu
 source scripts/ai-commit.nu
 

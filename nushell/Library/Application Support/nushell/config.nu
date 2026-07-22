@@ -46,6 +46,7 @@ alias gd = ^git diff
 alias gds = ^git diff --staged
 alias gp = ^git push
 alias gpf = ^git push --force-with-lease
+def ggpush [] { ^git push origin (^git branch --show-current | str trim) }
 alias gl = ^git pull
 alias glog = ^git log --oneline --decorate --graph
 alias gloga = ^git log --oneline --decorate --graph --all

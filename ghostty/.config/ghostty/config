@@ -12,3 +12,4 @@ cursor-style = block
 cursor-style-blink = true
 shell-integration-features = no-cursor
 
+command = /opt/homebrew/bin/nu

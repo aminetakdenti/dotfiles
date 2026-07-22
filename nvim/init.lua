@@ -39,7 +39,14 @@ do
   vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
   -- Enable break indent
-  vim.o.breakindent = true
+  vim.o.breakindent = false
+  vim.o.autoindent = false
+  vim.o.smartindent = false
+
+  vim.o.tabstop = 2
+  vim.o.shiftwidth = 2
+  vim.o.softtabstop = 2
+  vim.o.expandtab = true
 
   -- Enable undo/redo changes even after closing and reopening a file
   vim.o.undofile = true
@@ -154,6 +161,11 @@ do
   vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
   vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
   vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+  vim.keymap.set('n', 's', 'cl', { desc = 'Delete char and enter insert mode' })
+
+  vim.keymap.set('n', '>>', '<Nop>')
+  vim.keymap.set('n', '<<', '<Nop>')
 
   -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
   -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })

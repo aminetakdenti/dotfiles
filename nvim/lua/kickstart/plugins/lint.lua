@@ -7,6 +7,15 @@ lint.linters_by_ft = {
   markdown = { 'markdownlint' }, -- Make sure to install `markdownlint` via mason / npm
 }
 
+vim.keymap.set('n', '<leader>du', function()
+  local enabled = vim.diagnostic.is_enabled()
+  vim.diagnostic.enable(not enabled)
+
+  vim.notify(not enabled and 'Diagnostics enabled' or 'Diagnostics disabled')
+end, {
+  desc = 'Toggle diagnostics',
+})
+
 -- To allow other plugins to add linters to require('lint').linters_by_ft,
 -- instead set linters_by_ft like this:
 -- lint.linters_by_ft = lint.linters_by_ft or {}

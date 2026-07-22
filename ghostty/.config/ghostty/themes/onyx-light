@@ -1,0 +1,42 @@
+# Onyx Gold Light - Ghostty Theme
+# Author: Shawn Lukas
+
+background = #eeeeee
+foreground = #333333
+
+# Premium Gold Accent Mapping
+cursor-color = #c49312
+selection-background = #c49312
+selection-foreground = #eeeeee
+
+# Terminal Window Accents
+palette = 0=#333333
+palette = 8=#666666
+
+# Red
+palette = 1=#eb5757
+palette = 9=#eb5757
+
+# Green
+palette = 2=#00933f
+palette = 10=#00933f
+
+# Yellow / Gold
+palette = 3=#c49312
+palette = 11=#c49312
+
+# Blue (Mapped to crisp theme gold)
+palette = 4=#c49312
+palette = 12=#c49312
+
+# Magenta
+palette = 5=#eb5757
+palette = 13=#eb5757
+
+# Cyan
+palette = 6=#00933f
+palette = 14=#00933f
+
+# White
+palette = 7=#ffffff
+palette = 15=#dddddd

@@ -355,7 +355,20 @@ do
   -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
   -- - sd'   - [S]urround [D]elete [']quotes
   -- - sr)'  - [S]urround [R]eplace [)] [']
-  require('mini.surround').setup()
+  require('mini.surround').setup {
+    mappings = {
+      add = 'sa',
+      delete = 'sd',
+      replace = 'sr',
+      find = 'sf',
+      find_left = 'sF',
+      highlight = 'sh',
+      update_n_lines = 'sn',
+      suffix_last = 'l',
+      suffix_next = 'n',
+    },
+  }
+  vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { desc = 'Surround visual selection' })
 
   -- Simple and easy statusline.
   --  You could remove this setup call if you don't like it,

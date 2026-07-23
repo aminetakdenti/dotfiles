@@ -17,66 +17,52 @@
 # options using:
 #     config nu --doc | nu-highlight | less -R
 
-# Use vi mode
 $env.config.edit_mode = "vi"
-
-$env.config.keybindings = ($env.config.keybindings | append [
-    {
-        name: escape_to_normal
-        modifier: none
-        keycode: escape
-        mode: [emacs, vi_insert]
-        event: { send: Esc }
-    }
-])
 
 source scripts/tmx.nu
 source scripts/ai-commit.nu
+source scripts/git.nu
+source ~/.cache/zoxide.nu
+source $"($nu.cache-dir)/carapace.nu"
 
 alias e = nvim
 alias vim = nvim
 alias vi = nvim
-# alias cd = z
+alias cd = z
 alias oc = ^opencode
 alias lg = ^lazygit
 alias gclonep = ^git clone git@github-personal:
 alias gclonew = ^git clone git@github-work:
+alias gs = git status
+alias gfa = git fetch --all --prune
 
-# Git aliases (oh-my-zsh git plugin style)
-alias g = ^git
-alias ga = ^git add
-alias gaa = ^git add --all
-alias gst = ^git status
-alias gs = ^git status
-alias gc = ^git commit
-alias gcmsg = ^git commit -m
-alias gco = ^git checkout
-alias gcb = ^git checkout -b
-alias gb = ^git branch
-alias gba = ^git branch -a
-alias gbd = ^git branch -d
-alias gd = ^git diff
-alias gds = ^git diff --staged
-alias gp = ^git push
-alias gpf = ^git push --force-with-lease
-def ggpush [] { ^git push origin (^git branch --show-current | str trim) }
-alias gl = ^git pull
-alias glog = ^git log --oneline --decorate --graph
-alias gloga = ^git log --oneline --decorate --graph --all
-alias gm = ^git merge
-alias grb = ^git rebase
-alias grbi = ^git rebase -i
-alias gsta = ^git stash
-alias gstp = ^git stash pop
-alias gstl = ^git stash list
-alias gf = ^git fetch
-alias gfa = ^git fetch --all --prune
-alias gcl = ^git clone
-alias gcp = ^git cherry-pick
-alias grh = ^git reset HEAD
-alias grhh = ^git reset HEAD --hard
-alias gclean = ^git clean -fd
-
-source ~/.cache/zoxide.nu
-source ~/.cache/carapace.nu
-source ~/.config/nushell-local.nu
+$env.config.keybindings = ($env.config.keybindings | append [
+    {
+        name: ctrl_escape_to_normal
+        modifier: control
+        keycode: escape
+        mode: [vi_insert]
+        event: { send: Esc }
+    }
+    {
+        name: option_backspace
+        modifier: alt
+        keycode: backspace
+        mode: [vi_insert]
+        event: { edit: BackspaceWord }
+    }
+    {
+        name: command_backspace
+        modifier: super
+        keycode: backspace
+        mode: [vi_insert]
+        event: { edit: Clear }
+    }
+    {
+    name: ctrl_u_clear
+    modifier: control
+    keycode: char_u
+    mode: [vi_insert]
+    event: { edit: Clear }
+    }
+])

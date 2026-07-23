@@ -1,4 +1,4 @@
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+# [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -42,6 +42,9 @@ alias gclonep='git clone git@github-personal:'
 alias gclonew='git clone git@github-work:'
 
 export EDITOR="nvim"
+
+# Global prettier fallback config (used by prettierd when a project has no config)
+export PRETTIERD_DEFAULT_CONFIG="$HOME/dotfiles/prettier/.prettierrc.json"
 
 export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"

@@ -99,6 +99,9 @@ do
 
   -- previent all folds from bieng closed when opening
   vim.o.foldlevelstart = 99
+
+  -- add rounded borders to all floating windows (LSP hover, signature help, etc.)
+  vim.o.winborder = 'rounded'
 end
 
 -- ============================================================
@@ -750,7 +753,7 @@ do
     },
   }
 
-  vim.keymap.set({ 'n', 'v' }, '<leader>f', function() require('conform').format { async = true } end, { desc = '[F]ormat buffer' })
+  vim.keymap.set({ 'n', 'v' }, '<leader>fm', function() require('conform').format { async = true } end, { desc = '[F]or[m]at buffer' })
 end
 
 -- ============================================================

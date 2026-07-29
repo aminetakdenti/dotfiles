@@ -17,7 +17,22 @@
 # You can remove these comments if you want or leave
 # them for future reference.
 
-$env.PATH = ($env.PATH | prepend "/opt/homebrew/bin")
+# A GUI-launched terminal (Bruno's, and some IDE terminals) can start the shell
+# with no PATH in its environment at all. `$env.PATH` then doesn't exist, so a
+# bare `$env.PATH | prepend ...` throws `column_not_found` — and because a
+# failing line aborts the rest of env.nu, nothing below here would run either.
+# The symptom is `git` going missing while config.nu's git aliases still load.
+#
+# `$env.PATH?` tolerates the missing column, and the system directories are
+# spelled out rather than assumed: /usr/bin is where git actually lives, and
+# nothing else in this file puts it back.
+$env.PATH = (
+    $env.PATH?
+    | default []
+    | append ["/usr/bin" "/bin" "/usr/sbin" "/sbin"]
+    | prepend "/opt/homebrew/bin"
+    | uniq
+)
 source ~/.cache/starship/init.nu
 
 $env.EDITOR = "nvim"

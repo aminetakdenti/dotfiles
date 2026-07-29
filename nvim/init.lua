@@ -94,7 +94,7 @@ do
   vim.o.confirm = true
 
   -- add treesitter folding
-  vim.o.foldmethod = "expr"
+  vim.o.foldmethod = 'expr'
   vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
   -- previent all folds from bieng closed when opening
@@ -647,7 +647,17 @@ do
     -- But for many setups, the LSP (`ts_ls`) will work just fine
     ts_ls = {},
 
-    tailwindcss = {},
+    tailwindcss = {
+      settings = {
+        tailwindCSS = {
+          classFunctions = {
+            'cva',
+            'cx',
+            'cn',
+          },
+        },
+      },
+    },
 
     stylua = {}, -- Used to format Lua code
 
@@ -723,6 +733,33 @@ end
 do
   -- [[ Formatting ]]
   vim.pack.add { gh 'stevearc/conform.nvim' }
+
+  -- Path to the global prettier config used as a fallback when a project has
+  -- no prettier config of its own. prettierd reads PRETTIERD_DEFAULT_CONFIG.
+  local global_prettier_config = vim.fn.expand '~/dotfiles/prettier/.prettierrc.json'
+  if vim.uv.fs_stat(global_prettier_config) then
+    vim.env.PRETTIERD_DEFAULT_CONFIG = global_prettier_config
+  end
+
+  -- Detect whether a project uses biome by walking up from the current buffer
+  -- looking for a biome config file.
+  local function has_biome_config(bufnr)
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    local start = fname ~= '' and vim.fs.dirname(fname) or vim.fn.getcwd()
+    local found = vim.fs.find({ 'biome.json', 'biome.jsonc' }, { path = start, upward = true })
+    return #found > 0
+  end
+
+  -- Pick biome when the project has a biome config, otherwise fall back to
+  -- prettier (which uses the local prettier config if present, or the global
+  -- one via PRETTIERD_DEFAULT_CONFIG).
+  local function web_formatters(bufnr)
+    if has_biome_config(bufnr) then
+      return { 'biome', stop_after_first = true }
+    end
+    return { 'prettierd', 'prettier', stop_after_first = true }
+  end
+
   require('conform').setup {
     notify_on_error = false,
     format_on_save = function(bufnr)
@@ -742,13 +779,14 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
-      javascript = { 'prettierd', 'prettier', stop_after_first = true },
-      javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-      typescript = { 'prettierd', 'prettier', stop_after_first = true },
-      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-      json = { 'prettierd', 'prettier', stop_after_first = true },
-      css = { 'prettierd', 'prettier', stop_after_first = true },
-      html = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = web_formatters,
+      javascriptreact = web_formatters,
+      typescript = web_formatters,
+      typescriptreact = web_formatters,
+      json = web_formatters,
+      jsonc = web_formatters,
+      css = web_formatters,
+      html = web_formatters,
       lua = { 'stylua' },
     },
   }

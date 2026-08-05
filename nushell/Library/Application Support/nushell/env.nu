@@ -29,7 +29,7 @@
 $env.PATH = (
     $env.PATH?
     | default []
-    | append ["/usr/bin" "/bin" "/usr/sbin" "/sbin"]
+    | append ["/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin"]
     | prepend "/opt/homebrew/bin"
     | uniq
 )

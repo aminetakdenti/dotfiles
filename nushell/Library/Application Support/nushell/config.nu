@@ -18,6 +18,7 @@
 #     config nu --doc | nu-highlight | less -R
 
 $env.config.edit_mode = "vi"
+$env.config.show_banner = false
 
 source scripts/tmx.nu
 source scripts/ai-commit.nu

@@ -80,6 +80,25 @@ $env.PATH = (
     | uniq
 )
 
+$env.PATH = ($env.PATH | prepend $"($env.HOME)/Library/Python/3.9/bin")
+
+$env.PATH = (
+    $env.PATH
+    | prepend [
+        $"($env.HOME)/.opencode/bin"
+        $"($env.HOME)/.local/bin"
+        $"($env.HOME)/.antigravity/antigravity/bin"
+        $"($env.BUN_INSTALL)/bin"
+        "/opt/homebrew/bin"
+        "/opt/homebrew/lib/ruby/gems/4.0.0/bin"
+    ]
+    | append [
+        $"($env.ANDROID_HOME)/emulator"
+        $"($env.ANDROID_HOME)/platform-tools"
+    ]
+    | uniq
+)
+
 source-env ~/.config/nushell-local.nu
 
 $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'

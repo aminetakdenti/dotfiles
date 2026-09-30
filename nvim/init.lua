@@ -24,7 +24,7 @@ do
   vim.o.number = true
   -- You can also add relative line numbers, to help with jumping.
   --  Experiment for yourself to see if you like it!
-  -- vim.o.relativenumber = true
+  vim.o.relativenumber = true
 
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
@@ -263,7 +263,7 @@ local function gh(repo) return 'https://github.com/' .. repo end
 
 -- ============================================================
 -- SECTION 4: UI / CORE UX PLUGINS
--- guess-indent, gitsigns, which-key, colorscheme, todo-comments, mini modules
+-- guess-indent, which-key, colorscheme, todo-comments, mini modules
 -- ============================================================
 do
   -- [[ Installing and Configuring Plugins ]]
@@ -277,26 +277,6 @@ do
   -- For example, lets say we want to install `guess-indent.nvim` - a plugin for
   -- automatically detecting and setting the indentation.
   --
-  -- We first install it from https://github.com/NMAC427/guess-indent.nvim
-  -- and then call its `setup()` function to start it with default settings.
-  vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
-  require('guess-indent').setup {}
-
-  -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
-  --
-  -- See `:help gitsigns` to understand what each configuration key does.
-  -- Adds git related signs to the gutter, as well as utilities for managing changes
-  vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
-  require('gitsigns').setup {
-    signs = {
-      add = { text = '+' }, ---@diagnostic disable-line: missing-fields
-      change = { text = '~' }, ---@diagnostic disable-line: missing-fields
-      delete = { text = '_' }, ---@diagnostic disable-line: missing-fields
-      topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
-      changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
-    },
-  }
-
   -- Useful plugin to show you pending keybinds.
   vim.pack.add { gh 'folke/which-key.nvim' }
   require('which-key').setup {
@@ -637,7 +617,7 @@ do
   ---@type table<string, vim.lsp.Config>
   local servers = {
     -- clangd = {},
-    -- gopls = {},
+    gopls = {},
     -- pyright = {},
     -- rust_analyzer = {},
     --
@@ -646,6 +626,10 @@ do
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
     ts_ls = {},
+
+    -- elixir_ls = {},
+    dexter = {},
+    clangd = {},
 
     tailwindcss = {
       settings = {
@@ -660,6 +644,7 @@ do
     },
 
     stylua = {}, -- Used to format Lua code
+    ['prisma-language-server'] = {},
 
     -- Special Lua Config, as recommended by neovim help docs
     lua_ls = {
@@ -737,9 +722,7 @@ do
   -- Path to the global prettier config used as a fallback when a project has
   -- no prettier config of its own. prettierd reads PRETTIERD_DEFAULT_CONFIG.
   local global_prettier_config = vim.fn.expand '~/dotfiles/prettier/.prettierrc.json'
-  if vim.uv.fs_stat(global_prettier_config) then
-    vim.env.PRETTIERD_DEFAULT_CONFIG = global_prettier_config
-  end
+  if vim.uv.fs_stat(global_prettier_config) then vim.env.PRETTIERD_DEFAULT_CONFIG = global_prettier_config end
 
   -- Detect whether a project uses biome by walking up from the current buffer
   -- looking for a biome config file.
@@ -754,9 +737,7 @@ do
   -- prettier (which uses the local prettier config if present, or the global
   -- one via PRETTIERD_DEFAULT_CONFIG).
   local function web_formatters(bufnr)
-    if has_biome_config(bufnr) then
-      return { 'biome', stop_after_first = true }
-    end
+    if has_biome_config(bufnr) then return { 'biome', stop_after_first = true } end
     return { 'prettierd', 'prettier', stop_after_first = true }
   end
 
@@ -788,6 +769,8 @@ do
       css = web_formatters,
       html = web_formatters,
       lua = { 'stylua' },
+      go = { 'gofmt' },
+      c = { 'clang-format' },
     },
   }
 
@@ -942,11 +925,19 @@ do
   vim.pack.add {
     'https://github.com/nvim-treesitter/nvim-treesitter',
     'https://github.com/nvim-mini/mini.nvim', -- if you use the mini.nvim suite
-    -- 'https://github.com/nvim-mini/mini.icons',        -- if you use standalone mini plugins
+    'https://github.com/nvim-mini/mini.icons', -- if you use standalone mini plugins
     -- 'https://github.com/nvim-tree/nvim-web-devicons', -- if you prefer nvim-web-devicons
     'https://github.com/MeanderingProgrammer/render-markdown.nvim',
   }
   require('render-markdown').setup {}
+end
+
+do
+  vim.pack.add {
+    'folke/tokyonight.nvim',
+  }
+
+  vim.cmd.colorscheme 'tokyonight-night'
 end
 
 -- ============================================================

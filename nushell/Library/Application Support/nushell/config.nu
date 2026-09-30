@@ -23,6 +23,7 @@ $env.config.show_banner = false
 source scripts/tmx.nu
 source scripts/ai-commit.nu
 source scripts/git.nu
+source scripts/nvm.nu
 source ~/.cache/zoxide.nu
 source $"($nu.cache-dir)/carapace.nu"
 
@@ -31,39 +32,67 @@ alias vim = nvim
 alias vi = nvim
 alias cd = z
 alias oc = ^opencode
+alias pi = ^pi --model amazon-bedrock/us.openai.gpt-6-sol
 alias lg = ^lazygit
 alias gclonep = ^git clone git@github-personal:
 alias gclonew = ^git clone git@github-work:
 alias gs = git status
 alias gfa = git fetch --all --prune
 
+def tmux_session [] {
+  let session = (
+    tmux list-sessions -F '#S'
+    | lines
+    | str join "\n"
+    | ^fzf
+  )
+
+  if not ($session | is-empty) {
+    if ($env.TMUX? | is-empty) {
+      tmux attach-session -t $session
+    } else {
+      tmux switch-client -t $session
+    }
+  }
+}
+
 $env.config.keybindings = ($env.config.keybindings | append [
-    {
-        name: ctrl_escape_to_normal
-        modifier: control
-        keycode: escape
-        mode: [vi_insert]
-        event: { send: Esc }
-    }
-    {
-        name: option_backspace
-        modifier: alt
-        keycode: backspace
-        mode: [vi_insert]
-        event: { edit: BackspaceWord }
-    }
-    {
-        name: command_backspace
-        modifier: super
-        keycode: backspace
-        mode: [vi_insert]
-        event: { edit: Clear }
-    }
-    {
+  {
+    name: ctrl_escape_to_normal
+    modifier: control
+    keycode: escape
+    mode: [vi_insert]
+    event: { send: Esc }
+  }
+  {
+    name: option_backspace
+    modifier: alt
+    keycode: backspace
+    mode: [vi_insert]
+    event: { edit: BackspaceWord }
+  }
+  {
+    name: command_backspace
+    modifier: super
+    keycode: backspace
+    mode: [vi_insert]
+    event: { edit: Clear }
+  }
+  {
     name: ctrl_u_clear
     modifier: control
     keycode: char_u
     mode: [vi_insert]
     event: { edit: Clear }
+  },
+  {
+    name: tmux_session
+    modifier: control
+    keycode: char_s
+    mode: [vi_insert]
+    event: {
+      send: executehostcommand
+      cmd: "tmux_session"
     }
+  }
 ])

@@ -42,6 +42,7 @@ $env.BUN_INSTALL = $"($env.HOME)/.bun"
 
 $env.PNPM_HOME = ($env.HOME | path join ".local/share/pnpm")
 $env.PATH = ($env.PATH | append $env.PNPM_HOME)
+$env.PATH = ($env.PATH | append $"($env.HOME)/go/bin")
 
 # nvm: add the current node version's bin to PATH so tools like
 # pnpm/npm/node (installed under nvm) are found in nushell.

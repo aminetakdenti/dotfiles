@@ -1,5 +1,6 @@
 font-family = "JetBrains Mono"
 # theme = onyx-dark
+theme = onyx-dark
 theme = TokyoNight
 window-padding-x = 10
 window-padding-y = 10
@@ -17,5 +18,3 @@ keybind = super+ctrl+k=resize_split:up,10
 cursor-style = block
 cursor-style-blink = true
 shell-integration-features = no-cursor
-
-command = /opt/homebrew/bin/nu

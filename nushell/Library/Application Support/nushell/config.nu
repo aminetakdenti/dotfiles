@@ -32,7 +32,6 @@ alias vim = nvim
 alias vi = nvim
 alias cd = z
 alias oc = ^opencode
-alias pi = ^pi --model amazon-bedrock/us.openai.gpt-6-sol
 alias lg = ^lazygit
 alias gclonep = ^git clone git@github-personal:
 alias gclonew = ^git clone git@github-work:

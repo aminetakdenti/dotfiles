@@ -1,4 +1,4 @@
-# [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -82,3 +82,16 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Scope Claude Code's Bedrock credentials to projects under ~/code.
+claude() {
+  "$HOME/.config/claude/claude-scoped.sh" "$@"
+}
+
+# Use the same project-scoped Codex configuration in the terminal.
+codex() {
+  "$HOME/.config/codex/codex-scoped.sh" "$@"
+}
+
+# Load project environment when launching Zed from a shell.
+eval "$(direnv hook zsh)"

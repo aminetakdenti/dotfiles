@@ -1,22 +1,18 @@
 export DIRENV_LOG_FORMAT=""
 
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 # Powerlevel10k instant prompt — keep near the top
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
 export ZSH="$HOME/.oh-my-zsh"
 
 plugins=(
   git
   zsh-autosuggestions
-  zsh-syntax-highlighting
-  fast-syntax-highlighting
+  # zsh-syntax-highlighting
+  # fast-syntax-highlighting
   fzf
 )
 
@@ -68,15 +64,12 @@ export BUN_INSTALL="$HOME/.bun"
 
 export PNPM_HOME="$HOME/Library/pnpm"
 
-path_prepend "$HOME/.opencode/bin"
 path_prepend "$HOME/.local/bin"
-path_prepend "$HOME/.antigravity/antigravity/bin"
 path_prepend "$BUN_INSTALL/bin"
 path_prepend "$PNPM_HOME"
 
 eval "$(zoxide init zsh)"
 
-source "$HOME/dotfiles/zsh/functions/ai-commit.zsh"
 source "$HOME/dotfiles/zsh/functions/tmx.zsh"
 
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
@@ -85,19 +78,11 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 # bun completions
 [ -s "/Users/amine-dcb/.bun/_bun" ] && source "/Users/amine-dcb/.bun/_bun"
 
-# Scope Claude Code's Bedrock credentials to projects under ~/code.
-claude() {
-  "$HOME/.config/claude/claude-scoped.sh" "$@"
-}
-
-# Use the same project-scoped Codex configuration in the terminal.
-codex() {
-  "$HOME/.config/codex/codex-scoped.sh" "$@"
-}
-
 source <(tea completion zsh)
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
-eval "$(rbenv init - zsh)"
-# Load project environment when launching Zed from a shell.
-eval "$(direnv hook zsh)"
-eval "$(rbenv init - zsh)"
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

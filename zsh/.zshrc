@@ -1,8 +1,14 @@
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+export DIRENV_LOG_FORMAT=""
 
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+# Powerlevel10k instant prompt — keep near the top
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -79,10 +85,6 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 # bun completions
 [ -s "/Users/amine-dcb/.bun/_bun" ] && source "/Users/amine-dcb/.bun/_bun"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
 # Scope Claude Code's Bedrock credentials to projects under ~/code.
 claude() {
   "$HOME/.config/claude/claude-scoped.sh" "$@"
@@ -93,5 +95,9 @@ codex() {
   "$HOME/.config/codex/codex-scoped.sh" "$@"
 }
 
+source <(tea completion zsh)
+
+eval "$(rbenv init - zsh)"
 # Load project environment when launching Zed from a shell.
 eval "$(direnv hook zsh)"
+eval "$(rbenv init - zsh)"

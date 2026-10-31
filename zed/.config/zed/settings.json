@@ -1,0 +1,226 @@
+{
+  "show_edit_predictions": false,
+  "icon_theme": "Material Icon Theme",
+  "project_panel": {
+    "dock": "left",
+  },
+  "outline_panel": {
+    "dock": "left",
+  },
+  "collaboration_panel": {
+    "dock": "left",
+  },
+  "git_panel": {
+    "tree_view": true,
+    "dock": "left",
+  },
+  "diff_view_style": "split",
+  "soft_wrap": "editor_width",
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+    },
+    "lsp_pull_diagnostics": {
+      "enabled": true,
+    },
+  },
+  "cli_default_open_behavior": "new_window",
+  "format_on_save": "off",
+  "load_direnv": "direct",
+  "vim_mode": true,
+  "vim": {
+    "use_regex_search": true,
+    "use_system_clipboard": "on_yank",
+    "use_smartcase_find": true,
+  },
+  "terminal": {
+    "font_size": 12.0,
+    "font_family": "MonaspiceNe Nerd Font Mono",
+  },
+  "relative_line_numbers": "enabled",
+  "gutter": {
+    "line_numbers": true,
+  },
+  "buffer_font_family": "Fira Code",
+  "linked_edits": true,
+  "tab_size": 2,
+  "agent": {
+    "threads_sidebar": {
+      "position": "right"
+    },
+    "dock": "right",
+    "default_model": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5",
+    },
+    "inline_assistant_model": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5",
+    },
+    "commit_message_model": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5",
+    },
+  },
+  "agent_servers": {
+    "pi-acp": {
+      "type": "registry",
+    },
+    "claude-acp": {
+      "default_config_options": {
+        "fast": true,
+        "mode": "bypassPermissions",
+        "effort": "xhigh",
+        "model": "default",
+      },
+      "type": "registry",
+    },
+    "codex-acp": {
+      "type": "registry",
+    },
+  },
+  "base_keymap": "VSCode",
+  "ui_font_size": 14,
+  "buffer_font_size": 12,
+  "theme": {
+    "mode": "dark",
+    "light": "Onyx Gold Light",
+    "dark": "Tokyo Night",
+  },
+  "file_types": {
+    "Nginx": ["nginx.conf", "**/conf.d/*.conf"],
+  },
+  "file_scan_exclusions": ["**/routeTree.gen.ts"],
+  // "formatter": "prettier",
+  // "languages": {
+  //   "JavaScript": {
+  //     "formatter": "prettier",
+  //     "code_actions_on_format": {
+  //       "source.fixAll.biome": true,
+  //       "source.organizeImports.biome": true,
+  //     },
+  //   },
+  //   "TypeScript": {
+  //     "formatter": "prettier",
+  //     "format_on_save": "off",
+  //     "code_actions_on_format": {
+  //       "source.fixAll.biome": true,
+  //       "source.organizeImports.biome": true,
+  //     },
+  //   },
+  //   "TSX": {
+  //     "formatter": "prettier",
+  //     "format_on_save": "off",
+  //     "code_actions_on_format": {
+  //       "source.fixAll.biome": true,
+  //       "source.organizeImports.biome": true,
+  //     },
+  //   },
+  //   "CSS": {
+  //     "formatter": "prettier",
+  //     "format_on_save": "off",
+  //     "language_servers": [
+  //       "biome",
+  //       "tailwindcss-language-server",
+  //       "!vscode-css-language-server",
+  //     ],
+  //   },
+  //   "JSON": {
+  //     "formatter": "prettier",
+  //     "format_on_save": "off",
+  //   },
+  //   "Elixir": {
+  //     "language_servers": [
+  //       "expert",
+  //       "!elixir-ls",
+  //       "!dexter",
+  //       "!next-ls",
+  //       "!lexical",
+  //       "...",
+  //     ],
+  //     "formatter": {
+  //       "external": {
+  //         "command": "mix",
+  //         "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"],
+  //       },
+  //     },
+  //   },
+  //   "EEx": {
+  //     "language_servers": [
+  //       "expert",
+  //       "!elixir-ls",
+  //       "!dexter",
+  //       "!next-ls",
+  //       "!lexical",
+  //       "...",
+  //     ],
+  //     "formatter": {
+  //       "external": {
+  //         "command": "mix",
+  //         "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"],
+  //       },
+  //     },
+  //   },
+  //   "HEEx": {
+  //     "language_servers": [
+  //       "expert",
+  //       "!elixir-ls",
+  //       "!dexter",
+  //       "!next-ls",
+  //       "!lexical",
+  //       "...",
+  //     ],
+  //     "formatter": {
+  //       "external": {
+  //         "command": "mix",
+  //         "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"],
+  //       },
+  //     },
+  //   },
+  // },
+  "lsp": {
+    "tailwindcss-language-server": {
+      "settings": {
+        "tailwindCSS": {
+          "classAttributes": ["class", "className", "ngClass", "class:list"],
+          "experimental": {
+            "classRegex": [
+              ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+              ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+              ["clsx\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+              ["tw\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+            ],
+          },
+        },
+      },
+    },
+    "biome": {
+      "settings": {
+        "require_config_file": true,
+      },
+    },
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always",
+          },
+        },
+        "javascript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always",
+          },
+        },
+      },
+      "enable_lsp_tasks": true,
+    },
+    "elixir-ls": {},
+    "prisma-language-server": {
+      "settings": {
+        "prisma": {
+          "pinToPrisma6": true,
+        },
+      },
+    },
+  },
+}
